@@ -9,9 +9,11 @@ public class SolutionTest {
 
 	@Test
 	public void test() {
-		String candidates = "ABC";
+		String candidates = "ACBD";
 		List<ASolution> solutions = new ArrayList<ASolution>();
 		solutions.add(new Solution_0(candidates));
+		solutions.add(new Solution_1(candidates));
+		solutions.add(new Solution_2(candidates));
 		
 		for(ASolution s : solutions){
 			List<String> result = s.resolve();
