@@ -1,37 +1,61 @@
 package methodOfProgramming.utils;
 
 public class SinglyLinkedList<T> {
-	private Node<T> head;
-
-	public Node<T> getHead() {
-		return head;
+	private Node headPointer;
+	
+	public SinglyLinkedList() {
+		this.headPointer = new Node(null, null);
 	}
 
-	public void setHead(Node<T> head) {
-		this.head = head;
+	public Node getHead() {
+		return headPointer.getNext();
+	}
+	
+	public void addBeforeHead(T newValue) {
+		Node newNode = new Node(newValue, this.headPointer.getNext());
+		this.headPointer.setNext(newNode);
+	}
+	
+	public static SinglyLinkedList<Character>.Node reverseSinglyLinkedList(SinglyLinkedList<Character>.Node head) {
+		if (head == null || head.getNext() == null) {
+			return head;
+		}
+
+		SinglyLinkedList<Character>.Node prevNode = head;
+		SinglyLinkedList<Character>.Node currentNode = head.getNext();
+		SinglyLinkedList<Character>.Node nextNode = head.getNext().getNext();
+		while (nextNode != null) {
+			currentNode.setNext(prevNode);
+			prevNode = currentNode;
+			currentNode = nextNode;
+			nextNode = nextNode.getNext();
+		}
+		currentNode.setNext(prevNode);
+		head.setNext(null);
+		return currentNode;
 	}
 
-	public class Node<NT> {
-		private NT value;
-		private Node<NT> next;
+	public class Node {
+		private T value;
+		private Node next;
 
-		public NT getValue() {
+		public T getValue() {
 			return value;
 		}
 
-		public void setValue(NT value) {
+		public void setValue(T value) {
 			this.value = value;
 		}
 
-		public Node<NT> getNext() {
+		public Node getNext() {
 			return next;
 		}
 
-		public void setNext(Node<NT> next) {
+		public void setNext(Node next) {
 			this.next = next;
 		}
 
-		public Node(NT value, Node<NT> next) {
+		public Node(T value, Node next) {
 			this.value = value;
 			this.next = next;
 		}
