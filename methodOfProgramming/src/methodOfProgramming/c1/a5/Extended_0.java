@@ -7,33 +7,29 @@ import methodOfProgramming.utils.SinglyLinkedList;
  */
 public class Extended_0 {
 
-	public Extended_0() {
+	public static boolean isPalindrome(SinglyLinkedList<Character>.Node head){
+		SinglyLinkedList<Character>.Node slow = head;
+		SinglyLinkedList<Character>.Node fast = head;
+		while(fast != null){
+			slow = slow.getNext();
+			
+			fast = fast.getNext();
+			if(fast != null){
+				fast = fast.getNext();
+			}
+		}
 		
+		SinglyLinkedList<Character>.Node rightHead = reverseSinglyLinkedList(slow);
+		while(rightHead != null){
+			if(!head.getValue().equals(rightHead.getValue())){
+				return false;
+			}
+			head = head.getNext();
+			rightHead = rightHead.getNext();
+		}
+		return true;
 	}
 	
-	public static void main(String args[]) {
-		SinglyLinkedList<Character> slList = new SinglyLinkedList<>();
-		slList.addBeforeHead('A');
-		slList.addBeforeHead('B');
-		slList.addBeforeHead('C');
-		slList.addBeforeHead('D');
-		slList.addBeforeHead('E');
-		slList.addBeforeHead('F');
-		SinglyLinkedList<Character>.Node cur = slList.getHead();
-		while(cur != null) {
-			System.out.print(cur.getValue() + " ");
-			cur = cur.getNext();
-		}
-		System.out.println();
-		cur = reverseSinglyLinkedList(slList.getHead());
-		
-		while(cur != null) {
-			System.out.print(cur.getValue() + " ");
-			cur = cur.getNext();
-		}
-		System.out.println();
-	}
-
 	private static SinglyLinkedList<Character>.Node reverseSinglyLinkedList(SinglyLinkedList<Character>.Node head) {
 		if (head == null || head.getNext() == null) {
 			return head;

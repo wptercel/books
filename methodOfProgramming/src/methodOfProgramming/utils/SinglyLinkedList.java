@@ -15,25 +15,6 @@ public class SinglyLinkedList<T> {
 		Node newNode = new Node(newValue, this.headPointer.getNext());
 		this.headPointer.setNext(newNode);
 	}
-	
-	public static SinglyLinkedList<Character>.Node reverseSinglyLinkedList(SinglyLinkedList<Character>.Node head) {
-		if (head == null || head.getNext() == null) {
-			return head;
-		}
-
-		SinglyLinkedList<Character>.Node prevNode = head;
-		SinglyLinkedList<Character>.Node currentNode = head.getNext();
-		SinglyLinkedList<Character>.Node nextNode = head.getNext().getNext();
-		while (nextNode != null) {
-			currentNode.setNext(prevNode);
-			prevNode = currentNode;
-			currentNode = nextNode;
-			nextNode = nextNode.getNext();
-		}
-		currentNode.setNext(prevNode);
-		head.setNext(null);
-		return currentNode;
-	}
 
 	public class Node {
 		private T value;
