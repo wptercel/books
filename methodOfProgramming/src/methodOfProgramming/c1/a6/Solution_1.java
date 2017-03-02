@@ -16,6 +16,7 @@ public class Solution_1 extends ASolution {
 
 		// pre-process
 		lengths = new int[transformedStrLen];
+		lengths[0] = 1;
 
 		transformedString = new char[transformedStrLen];
 		transformedString[0] = '$';
@@ -27,19 +28,40 @@ public class Solution_1 extends ASolution {
 			}
 		}
 		transformedString[transformedStrLen - 2] = DELIMITER; // to handle empty input
-		transformedString[transformedStrLen - 1] = '\0';
+		transformedString[transformedStrLen - 1] = '@';
 		System.out.println(Arrays.toString(transformedString));
 	}
 
 	@Override
 	public String resolve() {
-		// initiate lengths[]
+		int coverageEnd = 0;
+		int coverageCenter = 0;
 		for(int i = 0; i < transformedStrLen; i++){
-			int armLength = 1;
-			while(isSymmetrical(i, armLength)){
-				armLength++;
+			if(i < coverageEnd){
+				int mirrorCenter = 2 * coverageCenter - i; // coverageCenter - ( i - coverageCenter)
+				int mirrorLeftEnd = 2 * coverageCenter - i - (lengths[mirrorCenter] - 1);
+				int coverageLeftEnd = 2 * coverageCenter - coverageEnd;
+				if( coverageLeftEnd < mirrorLeftEnd){
+					lengths[i] = lengths[mirrorCenter];
+					
+				}
+				else{
+					int armLength = 1;
+					while(isSymmetrical(i, armLength)){
+						armLength++;
+					}
+					lengths[i] = armLength;
+				}
+				if(coverageCenter + lengths[coverageCenter] - 1 < i + lengths[i] - 1){
+					coverageCenter = i;
+					coverageEnd = coverageCenter + lengths[coverageCenter] - 1;
+				}
+				if(coverageCenter + lengths[coverageCenter] - 1 == i + lengths[i] - 1){
+					coverageCenter = lengths[coverageCenter] > lengths[i] ? coverageCenter : i;
+					coverageEnd = coverageCenter + lengths[coverageCenter] - 1;
+
+				}
 			}
-			lengths[i] = armLength;
 		}
 		
 		System.out.println(Arrays.toString(lengths));
