@@ -36,34 +36,31 @@ public class Solution_1 extends ASolution {
 	public String resolve() {
 		int coverageEnd = 0;
 		int coverageCenter = 0;
-		for(int i = 0; i < transformedStrLen; i++){
-			if(i < coverageEnd){
-				int mirrorCenter = 2 * coverageCenter - i; // coverageCenter - ( i - coverageCenter)
-				int mirrorLeftEnd = 2 * coverageCenter - i - (lengths[mirrorCenter] - 1);
-				int coverageLeftEnd = 2 * coverageCenter - coverageEnd;
-				if( coverageLeftEnd < mirrorLeftEnd){
-					lengths[i] = lengths[mirrorCenter];
-					
-				}
-				else{
-					int armLength = 1;
-					while(isSymmetrical(i, armLength)){
-						armLength++;
-					}
-					lengths[i] = armLength;
-				}
-				if(coverageCenter + lengths[coverageCenter] - 1 < i + lengths[i] - 1){
-					coverageCenter = i;
-					coverageEnd = coverageCenter + lengths[coverageCenter] - 1;
-				}
-				if(coverageCenter + lengths[coverageCenter] - 1 == i + lengths[i] - 1){
-					coverageCenter = lengths[coverageCenter] > lengths[i] ? coverageCenter : i;
-					coverageEnd = coverageCenter + lengths[coverageCenter] - 1;
+		for (int i = 1; i < transformedStrLen; i++) {
+			int mirrorCenter = Math.max(2 * coverageCenter - i, 0); // coverageCenter - ( i - coverageCenter)
+			int mirrorLeftEnd = 2 * coverageCenter - i - (lengths[mirrorCenter] - 1);
+			int coverageLeftEnd = 2 * coverageCenter - coverageEnd;
+			if (coverageLeftEnd < mirrorLeftEnd) {
+				lengths[i] = lengths[mirrorCenter];
 
+			} else {
+				int armLength = coverageLeftEnd - mirrorLeftEnd;
+				while (isSymmetrical(i, armLength)) {
+					armLength++;
 				}
+				lengths[i] = armLength;
+			}
+
+			if (coverageCenter + lengths[coverageCenter] - 1 < i + lengths[i] - 1) {
+				coverageCenter = i;
+				coverageEnd = coverageCenter + lengths[coverageCenter] - 1;
+			}
+			if (coverageCenter + lengths[coverageCenter] - 1 == i + lengths[i] - 1) {
+				coverageCenter = lengths[coverageCenter] > lengths[i] ? coverageCenter : i;
+				coverageEnd = coverageCenter + lengths[coverageCenter] - 1;
 			}
 		}
-		
+
 		System.out.println(Arrays.toString(lengths));
 		return null;
 	}
