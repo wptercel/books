@@ -2,6 +2,8 @@ package methodOfProgramming.c1.a6;
 
 import java.util.Arrays;
 
+import methodOfProgramming.utils.MyStrings;
+
 public class Solution_1 extends ASolution {
 	private final char DELIMITER = '#';
 	private char[] transformedString;
@@ -11,6 +13,7 @@ public class Solution_1 extends ASolution {
 
 	public Solution_1(String input) {
 		super(input);
+		System.out.println(input);
 		int inputLength = input.length();
 		transformedStrLen = 2 * inputLength + 3;
 
@@ -62,6 +65,18 @@ public class Solution_1 extends ASolution {
 		}
 
 		System.out.println(Arrays.toString(lengths));
+
+		// Get longest palindrome
+		int longestLengthIndex = 0;
+		for (int i = 0; i < transformedStrLen - 1; i++) {
+			if (longestLengthIndex < lengths[i]) {
+				longestLengthIndex = i;
+			}
+		}
+		int longestLength = lengths[longestLengthIndex];
+		String result = input.substring((longestLengthIndex - longestLength - 1) / 2 + 1,
+				(longestLengthIndex + longestLength - 1) / 2);
+		System.out.println(result);
 		return null;
 	}
 
@@ -73,6 +88,7 @@ public class Solution_1 extends ASolution {
 	}
 
 	public static void main(String args[]) {
-		new Solution_1("abcbddbc").resolve();
+		String input = MyStrings.createRandomString(1000, false, true);
+		new Solution_1(input).resolve();
 	}
 }
