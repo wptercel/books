@@ -14,8 +14,9 @@ public class SolutionTests {
 		int[] input = MyArrays.CreateRandomIntArray(100);
 		List<ASolution> solutions = new ArrayList<ASolution>();
 		solutions.add(new Solution_0(input));
+		solutions.add(new Solution_1(input));
 		for(ASolution solution : solutions){
-			System.out.println(solution.resolve(11));
+			System.out.println(solution.resolve(99));
 		}
 	}
 
